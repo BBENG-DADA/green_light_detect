@@ -1,5 +1,6 @@
 #include "detect_green_light.h"
 
+
 int main(int argc, char** argv) {
 	string input = "input.avi";
 	if (argc > 1) {
@@ -18,16 +19,14 @@ int main(int argc, char** argv) {
 		cerr << "Error" << endl;
 		return -1;
 	}
-	Mat frame;
-	int i = 1;
-	cin >> i;
-	if (i == 0);
+	Mat frame; 
+	
 	while(true){
 	cap >> frame;
 	if (frame.empty()) break;
 
 	detect_green_light(frame);
-
+	
 	
 	}
 	cap.release();

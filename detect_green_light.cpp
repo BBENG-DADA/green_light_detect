@@ -1,4 +1,5 @@
 #include"detect_green_light.h"
+#include "rm_noise&small_parts.h"
 
 void detect_green_light(Mat& frame) {
 	Mat hsv, mask;
@@ -10,13 +11,16 @@ void detect_green_light(Mat& frame) {
 
 	//选出符合要求的像素并将图像二值化
 	inRange(hsv, lower_green, upper_green, mask);
-
+	//降噪处理,最大忽略面积与开闭运算核大小
+	int min = 500,kernelsize=5;
+	rm_ns(mask,min,kernelsize);
 	//存储轮廓点集和轮廓的容器
 	vector<vector<Point>> contours;
 	findContours(mask, contours, RETR_TREE, CHAIN_APPROX_SIMPLE);
 	for (size_t i = 0; i < contours.size(); i++) {
+		//根据存储的边缘信息画出最小矩形框
 		Rect bounding_rect = boundingRect(contours[i]);
-
+		//通过长宽判断识别的是否是圆形的绿灯
 		double aspect_ratio = (double)bounding_rect.width / (double)bounding_rect.height;
 		if (aspect_ratio > 0.5 && aspect_ratio < 1.5) {
 			Point center((bounding_rect.x + bounding_rect.width) / 2, (bounding_rect.y + bounding_rect.height) / 2);
