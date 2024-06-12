@@ -20,14 +20,16 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 	Mat frame; 
-	
+	namedWindow("Processed", WINDOW_NORMAL);
 	while(true){
 	cap >> frame;
-	if (frame.empty()) break;
+	if (frame.empty()) 
+		break;
 
 	detect_green_light(frame);
+	imshow("Processed", frame);
 	
-	
+	waitKey();
 	}
 	cap.release();
 
