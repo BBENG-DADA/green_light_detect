@@ -19,19 +19,21 @@ int main(int argc, char** argv) {
 		cerr << "Error" << endl;
 		return -1;
 	}
-	Mat frame; 
+	Mat frame;
 	namedWindow("Processed", WINDOW_NORMAL);
-	while(true){
-	cap >> frame;
-	if (frame.empty()) 
-		break;
+	while (true) {
+		cap >> frame;
+		if (frame.empty())
+			break;
 
-	detect_green_light(frame);
-	imshow("Processed", frame);
-	
-	waitKey();
+		detect_green_light(frame);
+		imshow("Processed", frame);
+		if (waitKey(30) == 27) { // 27 ÊÇEsc¼üµÄASCIIÂë
+			break;
+		}
 	}
-	cap.release();
+		cap.release();
 
-	return 0;
+		return 0;
+	
 }
