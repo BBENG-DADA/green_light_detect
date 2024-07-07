@@ -25,7 +25,9 @@ int main(int argc, char** argv) {
 		cap >> frame;
 		if (frame.empty())
 			break;
-
+		////画中心十字线
+		line(frame, Point(frame.size().width/2, 0), Point(frame.size().width/2, frame.size().height), Scalar(0, 0, 255));
+		line(frame, Point(0, frame.size().height/2), Point(frame.size().width, frame.size().height/2), Scalar(0, 0, 255));
 		detect_green_light(frame);
 		imshow("Processed", frame);
 		if (waitKey(30) == 27) { // 27 是Esc键的ASCII码
