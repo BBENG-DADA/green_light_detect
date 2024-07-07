@@ -27,10 +27,23 @@ void detect_green_light(Mat& frame) {
 		double aspect_ratio = (double)bounding_rect.width/(double)bounding_rect.height;
 		if (aspect_ratio > 0.5 && aspect_ratio < 1.5) {
 			//显示中心点值，与瞄准中心的差值
-			Point center((bounding_rect.x + bounding_rect.width)/2, (bounding_rect.y + bounding_rect.height)/2);
+			Point center(bounding_rect.x + bounding_rect.width/2,bounding_rect.y + bounding_rect.height/2);
 			rectangle(frame, bounding_rect, Scalar(0, 255, 0),2);
-			string centerlocation = "Target--X:"+ to_string((bounding_rect.x + bounding_rect.width)/2)+"Y:"+ to_string((bounding_rect.y + bounding_rect.height) / 2)+
-				                    "Destnation--X:" + to_string((mask.size().width / 2)-((bounding_rect.x + bounding_rect.width)/2)) + "Y:" + to_string((mask.size().height / 2)-((bounding_rect.y + bounding_rect.height)/2));
+			/*string centerlocation = "Target--X:"+ to_string((bounding_rect.x + bounding_rect.width)/2)+"Y:"+ to_string((bounding_rect.y + bounding_rect.height) / 2)+
+				                    "Destnation--X:" + to_string((mask.size().width / 2)-((bounding_rect.x + bounding_rect.width)/2)) + "Y:" + to_string((mask.size().height / 2)-((bounding_rect.y + bounding_rect.height)/2));*/
+			// 计算Target中心点坐标
+			int target_x = bounding_rect.x + bounding_rect.width/2 ;
+			int target_y = bounding_rect.y + bounding_rect.height/2 ;
+			// 计算图像中心点坐标
+			int image_center_x = mask.size().width / 2;
+			int image_center_y = mask.size().height / 2;
+			// 计算Destination
+			int dest_x = image_center_x - target_x;
+			int dest_y = image_center_y - target_y;
+			string centerlocation = "Target--X:" + to_string(target_x) +
+				                    " Y:" + to_string(target_y) +
+									" Destination--X:" + to_string(dest_x) +
+									" Y:" + to_string(dest_y);
 			Point org((bounding_rect.x + bounding_rect.width)/7, (bounding_rect.y + bounding_rect.height)/7);
 			putText(frame,centerlocation,org,FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2);
 			cout << "center is " << center << endl;
