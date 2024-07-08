@@ -1,6 +1,6 @@
-#include"detect_green_light.h"
+#include "detect_green_light.h"
 #include "rm_noise&small_parts.h"
-
+#include "coordinate calculation.h"
 void detect_green_light(Mat& frame) {
 	Mat hsv, mask;
 	cvtColor(frame, hsv, COLOR_BGR2HSV);
@@ -32,20 +32,21 @@ void detect_green_light(Mat& frame) {
 			/*string centerlocation = "Target--X:"+ to_string((bounding_rect.x + bounding_rect.width)/2)+"Y:"+ to_string((bounding_rect.y + bounding_rect.height) / 2)+
 				                    "Destnation--X:" + to_string((mask.size().width / 2)-((bounding_rect.x + bounding_rect.width)/2)) + "Y:" + to_string((mask.size().height / 2)-((bounding_rect.y + bounding_rect.height)/2));*/
 			// 计算Target中心点坐标
-			int target_x = bounding_rect.x + bounding_rect.width/2 ;
-			int target_y = bounding_rect.y + bounding_rect.height/2 ;
+			double target_x = bounding_rect.x + bounding_rect.width/2 ;
+			double target_y = bounding_rect.y + bounding_rect.height/2 ;
 			// 计算图像中心点坐标
-			int image_center_x = mask.size().width / 2;
-			int image_center_y = mask.size().height / 2;
+			double image_center_x = mask.size().width / 2;
+			double image_center_y = mask.size().height / 2;
 			// 计算Destination
-			int dest_x = image_center_x - target_x;
-			int dest_y = image_center_y - target_y;
+			double dest_x = image_center_x - target_x;
+			double dest_y = image_center_y - target_y;
 			string centerlocation = "Target--X:" + to_string(target_x) +
 				                    " Y:" + to_string(target_y) +
 									" Destination--X:" + to_string(dest_x) +
 									" Y:" + to_string(dest_y);
 			Point org((bounding_rect.x + bounding_rect.width)/7, (bounding_rect.y + bounding_rect.height)/7);
 			putText(frame,centerlocation,org,FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2);
+			cd_cc(target_x,target_y);
 			cout << "center is " << center << endl;
 		}
 	}
