@@ -40,14 +40,25 @@ void detect_green_light(Mat& frame) {
 			// 计算Destination
 			double dest_x = image_center_x - target_x;
 			double dest_y = image_center_y - target_y;
-			string centerlocation = "Target--X:" + to_string(target_x) +
-				                    " Y:" + to_string(target_y) +
-									" Destination--X:" + to_string(dest_x) +
-									" Y:" + to_string(dest_y);
-			Point org((bounding_rect.x + bounding_rect.width)/7, (bounding_rect.y + bounding_rect.height)/7);
-			putText(frame,centerlocation,org,FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2);
-			cd_cc(target_x,target_y);
-			cout << "center is " << center << endl;
+			double Deviation_angle = cd_cc(dest_x, dest_y);
+			//显示模块，可以用vector来存点和字符串，但是还要写配套结构体懒得写了 ：<
+			string centerlocationTx = "Target--X:" + to_string(target_x);
+			string centerlocationTy = "Y:" + to_string(target_y);
+			string centerlocationDx = "Destination--X:" + to_string(dest_x);
+			string centerlocationDy = "Y:" + to_string(dest_y);
+			string centerlocationAg = "Angle:"+to_string(cd_cc(dest_x,dest_y));
+			Point org1(50, 50);
+			Point org2(50, 100);
+			Point org3(50, 150);
+			Point org4(50, 200);
+			Point org5(50, 250);
+			putText(frame, centerlocationTx,org1, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
+			putText(frame, centerlocationTy,org2, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
+			putText(frame, centerlocationDx,org3, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
+			putText(frame, centerlocationDy,org4, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
+			putText(frame, centerlocationAg,org5, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
+			//cout << "center is " << center << endl;
+			cout << "Angle is " << cd_cc(dest_x, dest_y) << endl;
 		}
 	}
 }
