@@ -1,4 +1,4 @@
-#include "rm_noise&small_parts.h"
+#include "rm_noise_and_small_parts.h"
 
 void rm_ns(Mat& image, int min_size,int kernelsize) {
 	//¿ª±ÕÔËËã½µÔë

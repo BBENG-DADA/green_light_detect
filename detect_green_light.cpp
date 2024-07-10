@@ -1,6 +1,6 @@
 #include "detect_green_light.h"
-#include "rm_noise&small_parts.h"
-#include "coordinate calculation.h"
+#include "rm_noise_and_small_parts.h"
+#include "coordinate_calculation.h"
 void detect_green_light(Mat& frame) {
 	Mat hsv, mask;
 	cvtColor(frame, hsv, COLOR_BGR2HSV);
@@ -40,13 +40,13 @@ void detect_green_light(Mat& frame) {
 			// 计算Destination
 			double dest_x = image_center_x - target_x;
 			double dest_y = image_center_y - target_y;
-			double Deviation_angle = cd_cc(dest_x, dest_y);
+            double Deviation_angle = cd_cc(dest_x);
 			//显示模块，可以用vector来存点和字符串，但是还要写配套结构体懒得写了 ：<
 			string centerlocationTx = "Target--X:" + to_string(target_x);
 			string centerlocationTy = "Y:" + to_string(target_y);
 			string centerlocationDx = "Destination--X:" + to_string(dest_x);
 			string centerlocationDy = "Y:" + to_string(dest_y);
-			string centerlocationAg = "Angle:"+to_string(cd_cc(dest_x,dest_y));
+            string centerlocationAg = "Angle:"+to_string(cd_cc(dest_x));
 			Point org1(50, 50);
 			Point org2(50, 100);
 			Point org3(50, 150);
@@ -58,7 +58,7 @@ void detect_green_light(Mat& frame) {
 			putText(frame, centerlocationDy,org4, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
 			putText(frame, centerlocationAg,org5, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
 			//cout << "center is " << center << endl;
-			cout << "Angle is " << cd_cc(dest_x, dest_y) << endl;
+            cout << "Angle is " << Deviation_angle << endl;
 		}
 	}
 }

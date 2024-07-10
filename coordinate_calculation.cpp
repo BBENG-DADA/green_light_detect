@@ -1,6 +1,6 @@
-#include "coordinate calculation.h"
+#include "coordinate_calculation.h"
 
-double cd_cc(double dest_x,double dest_y){
+double cd_cc(double dest_x){
 	double pi_value = acos(-1.0);
 	const double internal_reference[3][4]{100,0,0,0,0,0,0,0,0,0,0,0};     /*相机内参矩阵*/
 	/*const double Zc=1;*///相机坐标系Zc值，即基地至摄像头距离
