@@ -8,7 +8,6 @@
 cv::Mat ConvertBayerRG8ToBGR(cv::Mat bayerImage)
 {
     cv::Mat bgrImage;
-    // 由于蓝色和红色互换了，因此使用 cv::COLOR_BayerBG2BGR 进行转换
     cv::cvtColor(bayerImage, bgrImage, cv::COLOR_BayerBG2BGR);
     return bgrImage;
 }

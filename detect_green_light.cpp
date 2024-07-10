@@ -6,8 +6,8 @@ void detect_green_light(Mat& frame) {
 	cvtColor(frame, hsv, COLOR_BGR2HSV);
 
 	//确定要识别的绿色的HSV范围（色调，饱和度，亮度）
-	Scalar lower_green = Scalar(35, 100, 100);
-	Scalar upper_green = Scalar(85, 255, 255);
+	Scalar lower_green = Scalar(35, 100, 10);
+	Scalar upper_green = Scalar(75, 200, 80);
 
 	//选出符合要求的像素并将图像二值化
 	inRange(hsv, lower_green, upper_green, mask);
@@ -25,7 +25,7 @@ void detect_green_light(Mat& frame) {
 		Rect bounding_rect = boundingRect(contours[i]);
 		//通过长宽判断识别的是否是圆形的绿灯
 		double aspect_ratio = (double)bounding_rect.width/(double)bounding_rect.height;
-		if (aspect_ratio > 0.5 && aspect_ratio < 1.5) {
+		if (aspect_ratio > 0.8 && aspect_ratio < 1.2) {
 			//显示中心点值，与瞄准中心的差值
 			Point center(bounding_rect.x + bounding_rect.width/2,bounding_rect.y + bounding_rect.height/2);
 			rectangle(frame, bounding_rect, Scalar(0, 255, 0),2);
@@ -40,7 +40,7 @@ void detect_green_light(Mat& frame) {
 			// 计算Destination
 			double dest_x = image_center_x - target_x;
 			double dest_y = image_center_y - target_y;
-            double Deviation_angle = cd_cc(dest_x);
+            double unsigned_Deviation_angle = cd_cc(dest_x);
 			//显示模块，可以用vector来存点和字符串，但是还要写配套结构体懒得写了 ：<
 			string centerlocationTx = "Target--X:" + to_string(target_x);
 			string centerlocationTy = "Y:" + to_string(target_y);
@@ -58,7 +58,7 @@ void detect_green_light(Mat& frame) {
 			putText(frame, centerlocationDy,org4, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
 			putText(frame, centerlocationAg,org5, FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2);
 			//cout << "center is " << center << endl;
-            cout << "Angle is " << Deviation_angle << endl;
+            //cout << "Angle is " << Deviation_angle << endl;
 		}
 	}
 }
